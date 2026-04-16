@@ -1,36 +1,83 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portfolio Website - Muhammad Naufal Aqila
+
+Website portofolio personal untuk Civil Engineer yang dibangun dengan Next.js 16, TypeScript, dan Tailwind CSS v4.
+
+## Tech Stack
+
+- **Framework**: Next.js 16 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS v4
+- **Animations**: Framer Motion
+- **Icons**: Lucide React + Custom SVG
+- **Theme**: Dark/Light mode dengan next-themes
 
 ## Getting Started
 
-First, run the development server:
-
+1. Install dependencies:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Jalankan development server:
+```bash
+npm run dev
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Buka [http://localhost:3000](http://localhost:3000) di browser
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Cara Mengisi Konten
 
-## Learn More
+Semua konten website terpusat di **`src/lib/data.ts`**. Edit file ini untuk mengubah:
 
-To learn more about Next.js, take a look at the following resources:
+- **Profile Info**: Nama, title, bio, kontak, sosial media
+- **Skills & Pelatihan**: Daftar pelatihan teknik sipil
+- **Experience**: Riwayat kerja dan internship
+- **Organizations**: Pengalaman organisasi
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Contoh:
+```typescript
+// src/lib/data.ts
+export const profile = {
+  name: "Muhammad Naufal Aqila",
+  title: "Civil Engineer",
+  bio: "Ganti dengan bio Anda...",
+  // ...
+}
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Struktur Project
 
-## Deploy on Vercel
+```
+src/
+├── app/
+│   ├── layout.tsx          # Root layout
+│   ├── page.tsx            # Main page
+│   └── globals.css         # Global styles
+├── components/
+│   ├── navbar.tsx          # Navigation bar
+│   ├── hero.tsx            # Hero section
+│   ├── about.tsx           # About section
+│   ├── skills.tsx          # Skills & Pelatihan
+│   ├── experience.tsx      # Experience timeline
+│   ├── organizations.tsx   # Organizations
+│   ├── footer.tsx          # Footer
+│   └── theme-provider.tsx  # Dark/light mode
+└── lib/
+    └── data.ts             # ⭐ EDIT FILE INI UNTUK KONTEN
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deploy ke Vercel
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Push code ke GitHub (sudah selesai ✅)
+2. Buka [vercel.com](https://vercel.com)
+3. Import repository `alfaruqrama/portofolio`
+4. Klik "Deploy"
+
+Vercel akan otomatis detect Next.js dan deploy website Anda.
+
+## Build Production
+
+```bash
+npm run build
+npm start
+```
