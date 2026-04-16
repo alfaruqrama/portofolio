@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
 import { profile } from "@/lib/data";
+import Image from "next/image";
 
 export function About() {
   const ref = useRef(null);
@@ -31,24 +32,37 @@ export function About() {
 
           {/* Content */}
           <div className="grid md:grid-cols-[280px_1fr] gap-10 items-start">
-            {/* Photo placeholder */}
+            {/* Photo */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               animate={isInView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.7, delay: 0.2 }}
               className="mx-auto md:mx-0"
             >
-              <div className="w-64 h-72 rounded-2xl bg-gradient-to-br from-zinc-200 to-zinc-300 dark:from-zinc-700 dark:to-zinc-800 flex items-center justify-center shadow-lg overflow-hidden">
-                <div className="text-center text-zinc-500 dark:text-zinc-400">
-                  <div className="text-5xl mb-2">
-                    {profile.name
-                      .split(" ")
-                      .map((n) => n[0])
-                      .join("")
-                      .slice(0, 2)}
+              <div className="w-64 h-72 rounded-2xl bg-gradient-to-br from-zinc-200 to-zinc-300 dark:from-zinc-700 dark:to-zinc-800 shadow-lg overflow-hidden">
+                {profile.avatar ? (
+                  <Image
+                    src={profile.avatar}
+                    alt={profile.name}
+                    width={256}
+                    height={288}
+                    className="w-full h-full object-cover"
+                    priority
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center">
+                    <div className="text-center text-zinc-500 dark:text-zinc-400">
+                      <div className="text-5xl mb-2">
+                        {profile.name
+                          .split(" ")
+                          .map((n) => n[0])
+                          .join("")
+                          .slice(0, 2)}
+                      </div>
+                      <p className="text-xs">Tambahkan foto Anda</p>
+                    </div>
                   </div>
-                  <p className="text-xs">Tambahkan foto Anda</p>
-                </div>
+                )}
               </div>
             </motion.div>
 

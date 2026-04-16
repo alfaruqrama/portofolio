@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { ArrowDown, MapPin } from "lucide-react";
 import { profile } from "@/lib/data";
+import Image from "next/image";
 
 export function Hero() {
   const handleScrollDown = () => {
@@ -23,20 +24,33 @@ export function Hero() {
       <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-indigo-400/10 dark:bg-indigo-500/5 rounded-full blur-3xl" />
 
       <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
-        {/* Profile photo placeholder */}
+        {/* Profile photo */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6 }}
-          className="mx-auto mb-8 w-32 h-32 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-xl shadow-blue-500/20 dark:shadow-blue-500/10 ring-4 ring-white dark:ring-zinc-800"
+          className="mx-auto mb-8 w-32 h-32 rounded-full overflow-hidden shadow-xl shadow-blue-500/20 dark:shadow-blue-500/10 ring-4 ring-white dark:ring-zinc-800"
         >
-          <span className="text-4xl font-bold text-white">
-            {profile.name
-              .split(" ")
-              .map((n) => n[0])
-              .join("")
-              .slice(0, 2)}
-          </span>
+          {profile.avatar ? (
+            <Image
+              src={profile.avatar}
+              alt={profile.name}
+              width={128}
+              height={128}
+              className="w-full h-full object-cover"
+              priority
+            />
+          ) : (
+            <div className="w-full h-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
+              <span className="text-4xl font-bold text-white">
+                {profile.name
+                  .split(" ")
+                  .map((n) => n[0])
+                  .join("")
+                  .slice(0, 2)}
+              </span>
+            </div>
+          )}
         </motion.div>
 
         {/* Name */}

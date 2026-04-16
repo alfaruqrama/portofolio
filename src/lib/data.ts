@@ -6,6 +6,7 @@ export const profile = {
   name: "Muhammad Naufal Aqila",
   title: "Civil Engineer",
   tagline: "Membangun Masa Depan dengan Fondasi yang Kuat",
+  avatar: "/profile.jpg", // Foto profil
   bio: [
     "Saya adalah seorang Civil Engineer yang berdedikasi dalam merancang dan membangun infrastruktur yang berkelanjutan. Dengan latar belakang pendidikan di bidang Teknik Sipil, saya memiliki passion dalam menciptakan solusi struktural yang inovatif dan efisien.",
     "Pengalaman saya mencakup berbagai proyek konstruksi, mulai dari perencanaan hingga pelaksanaan. Saya percaya bahwa setiap struktur yang dibangun harus memenuhi standar keamanan tertinggi sekaligus memberikan nilai estetika dan fungsional.",
@@ -126,3 +127,4 @@ export const organizations: Organization[] = [
       "Deskripsi peran dan kontribusi Anda di organisasi ini akan diisi di sini.",
   },
 ];
+
