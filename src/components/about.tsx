@@ -1,13 +1,46 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
-import { useRef } from "react";
+import { motion, AnimatePresence, useInView } from "framer-motion";
+import { useRef, useState, useEffect } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import Image from "next/image";
 import { profile } from "@/lib/data";
+
+const photos = [
+  "/images/photo-1.jpg",
+  "/images/photo-2.jpg",
+  "/images/photo-3.jpg",
+  "/images/photo-4.jpg",
+];
 
 export function About() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [current, setCurrent] = useState(0);
+  const [direction, setDirection] = useState(1);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setDirection(1);
+      setCurrent((c) => (c + 1) % photos.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const goTo = (index: number) => {
+    setDirection(index > current ? 1 : -1);
+    setCurrent(index);
+  };
+
+  const prev = () => {
+    setDirection(-1);
+    setCurrent((c) => (c - 1 + photos.length) % photos.length);
+  };
+
+  const next = () => {
+    setDirection(1);
+    setCurrent((c) => (c + 1) % photos.length);
+  };
 
   return (
     <section id="tentang" className="py-24 sm:py-32">
@@ -31,23 +64,63 @@ export function About() {
 
           {/* Content */}
           <div className="grid md:grid-cols-[280px_1fr] gap-10 items-start">
-            {/* Photo placeholder */}
+            {/* Photo carousel */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               animate={isInView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.7, delay: 0.2 }}
               className="mx-auto md:mx-0"
             >
-              <div className="w-64 h-72 rounded-2xl bg-gradient-to-br from-zinc-200 to-zinc-300 dark:from-zinc-700 dark:to-zinc-800 flex items-center justify-center shadow-lg overflow-hidden">
-                <div className="text-center text-zinc-500 dark:text-zinc-400">
-                  <div className="text-5xl mb-2">
-                    {profile.name
-                      .split(" ")
-                      .map((n) => n[0])
-                      .join("")
-                      .slice(0, 2)}
-                  </div>
-                  <p className="text-xs">Tambahkan foto Anda</p>
+              <div className="relative w-64 h-72 rounded-2xl shadow-lg overflow-hidden group">
+                <AnimatePresence initial={false} custom={direction} mode="wait">
+                  <motion.div
+                    key={current}
+                    custom={direction}
+                    initial={{ opacity: 0, x: direction * 40 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: direction * -40 }}
+                    transition={{ duration: 0.35, ease: "easeInOut" }}
+                    className="absolute inset-0"
+                  >
+                    <Image
+                      src={photos[current]}
+                      alt={`${profile.name} - foto ${current + 1}`}
+                      fill
+                      className="object-cover object-top"
+                    />
+                  </motion.div>
+                </AnimatePresence>
+
+                {/* Arrow buttons */}
+                <button
+                  onClick={prev}
+                  className="absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-black/40 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/60"
+                  aria-label="Previous photo"
+                >
+                  <ChevronLeft size={16} />
+                </button>
+                <button
+                  onClick={next}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-black/40 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/60"
+                  aria-label="Next photo"
+                >
+                  <ChevronRight size={16} />
+                </button>
+
+                {/* Dots */}
+                <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-1.5">
+                  {photos.map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => goTo(i)}
+                      className={`w-1.5 h-1.5 rounded-full transition-all ${
+                        i === current
+                          ? "bg-white w-4"
+                          : "bg-white/50 hover:bg-white/80"
+                      }`}
+                      aria-label={`Go to photo ${i + 1}`}
+                    />
+                  ))}
                 </div>
               </div>
             </motion.div>
